@@ -29,7 +29,9 @@ class BooksSpider(scrapy.Spider):
     def parse_single_book(response: Response) -> dict:
         yield {
             "title": response.css(".product_main > h1::text").get(),
-            "price": response.css("p.price_color::text").get().replace("£", ""),
+            "price": response.css(
+                "p.price_color::text"
+            ).get().replace("£", ""),
             "amount_in_stock": int(response.css(
                 ".table-striped tr td::text"
             ).getall()[-2].split()[-2].replace("(", "")),
@@ -46,5 +48,3 @@ class BooksSpider(scrapy.Spider):
                 ".table-striped tr td::text"
             ).getall()[0]
         }
-
-#content_inner > article > table > tbody > tr:nth-child(6) > td
